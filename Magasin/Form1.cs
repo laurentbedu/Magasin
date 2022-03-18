@@ -19,10 +19,13 @@ namespace Magasin
                 textBoxReference.Text,
                 textBoxDesignation.Text,
                 (double)numericUpDownPrixHT.Value,
-                Taxe.Tx5);
+                TxTaxe.Tx5);
             articles.Add(newArticle);
             listBoxArticles.Items.Add(newArticle.ToString());
 
+            CustomControl1 cc1 = new CustomControl1(newArticle.Designation);
+            cc1.Top = (articles.Count - 1) * 100;
+            panel2.Controls.Add(cc1);
             
 
 

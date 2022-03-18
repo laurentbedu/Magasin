@@ -40,6 +40,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listBoxArticles = new System.Windows.Forms.ListBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrixHT)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -160,11 +161,19 @@
             this.listBoxArticles.Size = new System.Drawing.Size(358, 204);
             this.listBoxArticles.TabIndex = 8;
             // 
+            // panel2
+            // 
+            this.panel2.Location = new System.Drawing.Point(455, 50);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(250, 388);
+            this.panel2.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -193,5 +202,6 @@
         private TabPage tabPage1;
         private TabPage tabPage2;
         private ListBox listBoxArticles;
+        private Panel panel2;
     }
 }

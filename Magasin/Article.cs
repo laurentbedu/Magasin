@@ -9,57 +9,78 @@ namespace Magasin
     internal class Article
     {
         //Attributs
-        private string reference;
-        private string designation;
-        private double prixHT;
-        private static double tauxTVA = 20;
-        private Taxe taxe;
+        private string reference = "";
+        private string designation = "";
+        private double prixHT = 0;
+        private TxTaxe taxe = TxTaxe.Tx1;
+        private Category? category;
 
         //Propriétés
         public string Reference { get => reference; set => reference = value; }
         public string Designation { get => designation; set => designation = value; }
         public double PrixHT { get => prixHT; set => prixHT = value; }
-        public static double TauxTVA { get => tauxTVA; set => tauxTVA = value; }
-        public Taxe Taxe { get => taxe; set => taxe = value; }
+        public TxTaxe Taxe { get => taxe; set => taxe = value; }
+        internal Category? Category { 
+            get => category;
+            set
+            {
+                if (category != value)
+                {
+                    category?.RemoveArticle(this);
+                    category = value;
+                    category?.AddArticle(this);
+                }
+            }
+        }
 
         //Constructeurs
-        public Article() { }//Constructeur par défaut
-        public Article(string _reference, string _designation, double _prixHT, Taxe _taxe)//Constructeur d'initialisation
+        public Article() { }
+        public Article(string reference, string designation, double prixHT = 0, TxTaxe taxe = TxTaxe.Tx1)
         {
-            reference = _reference;
-            designation = _designation;
-            prixHT = _prixHT;
-            taxe = _taxe;
+            Reference = reference;
+            Designation = designation;
+            PrixHT = prixHT;
+            Taxe = taxe;
 
         }
-        public Article(Article article)//Constructeur de recopie
+        public Article(Article article)
         {
-            reference = article.reference;
-            designation = article.designation;
-            prixHT = article.prixHT;
-            taxe = article.taxe;    
+            Reference = article.Reference;
+            Designation = article.Designation;
+            PrixHT = article.PrixHT;
+            Taxe = article.Taxe;    
         }
 
-        //Méthodes
         public double CalculerPrixTTC()
         {
-            return prixHT * (1 + tauxTVA / 100);
-        }
-        public string AfficherArticle()
-        {
-            return designation + " (Réf:" + reference + ") " + prixHT + "€HT (" + CalculerPrixTTC() + "€TTC)";
-        }
+            double prixTTC = 0;
+            switch (Taxe)
+            {
+                case TxTaxe.Tx1:
+                    prixTTC = PrixHT * 1.055;
+                    break;
 
+                case TxTaxe.Tx2:
+                    prixTTC = PrixHT * 1.1;
+                    break;
+
+                case TxTaxe.Tx3:
+                    prixTTC = PrixHT * 1.2;
+                    break;
+
+            }
+            return prixTTC;
+        }
         public override string ToString()
         {
-            return designation + " (Réf:" + reference + ") " + prixHT + "€HT (" + CalculerPrixTTC() + "€TTC)";
+            return Designation + " (Réf:" + Reference + ") : " + PrixHT + "€HT (" + CalculerPrixTTC() + "€TTC)";
         }
     }
 
-    enum Taxe
+    internal enum TxTaxe
     {
-        Tx5 = 5,
-        Tx10 = 10,
-        Tx20 = 20
+        Tx1,
+        Tx2,
+        Tx3
     }
 }
